@@ -1,0 +1,21 @@
+KnifeTank,
+
+A simple chiptune inspired shooter for y'r computerhole.
+
+KnifeTank is an overhead shooter based on the classic game, Combat-> http://www.youtube.com/watch?v=NIHqyfewiCg 
+
+The Tank- In KnifeTank, the player operates a tank through a maze by clicking the arrow keys (or WASD keys) on their keyboard. The player can shoot their tank by moving their cursor in the direction they want to shoot (in relation to their tank) and clicking their mouse button. Each shot they fire bounces of walls repeatedly and takes a long time to fade away completely (unless they hit an enemy ship).
+
+Walls- Scattered throughout each level are a few glowing walls that represent musical elements. Anytime one of the glowing walls gets hit, it switches on or off (depending on it's current state). 
+
+The Enemies- In each maze there will be enemy ships that float around. These ships can be destroyed by firing at them, but if one of these ships touches the players tank, the game is over. These ships motions would be similar to the ghosts in Pac-Man. 
+
+The Strategy- LoveTank will start off with just a few glowing walls, but eventually becomes a game filled with glowing walls. So simply firing shots means you'll be turning on and off the same walls repeatedly as the tank bullets fly around. So strategies might involve ricocheting shots off walls when an enemy is nearby so that the bullet will get stopped. This game will be a cross of Pac-Man style move and avoid, along with skilled shooting and planning.
+
+The Music- Each glowing wall in KnifeTank represents a section of music. When a wall gets turned off, that part of the music turns from chipsound to acoustic instruments. So in an early level, where there are only a few walls, one wall may represent the bass and drums and the other wall represents the lead melody. When KnifeTank shoots the first wall, the Bass and Drums will turn into cello and drums, but the melody will continue on. 
+
+WTF KnifeTank?!- KnifeTank is a character I made up a few years ago. Since this is a tank game, I thought I should try to throw him in. Check out this painting my friend Mike did of KnifeTank! http://www.flickr.com/photos/ekimtiki/3616384270/ Wouldn't that make a great intro screen?!
+
+Art style- KnifeTank would be done in a nulofi style, meaning we'd be creating simplistic pixel graphics with watercolor art and drawings. So it would be retro styled, but actually made with scanned png files of objects. The art style is meant to fit with the music style, part retro/part modern.
+
+Okay, that's my pitch. This game could be made for desktop or Flash or html5 or iPhone or whatever. If it was for a computer we would use keys and the mouse, if it was for the iPhone we could use a dual stick shooter overlay (which I think would rock). I just want to get a game done, so whatever format either of you are comfortable working with, I'm happy with. If either of you are interested in working on this, let's talk on iChat sometime or meetup at Noisebridge. I tried to keep this game as simple as possible, but maybe it could be stripped down more. Let's talk about it.

@@ -1,0 +1,1987 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Knifetank(s)</title>  
+<script type="text/javascript" src="processing/processing-0.8.js"></script>
+<script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" src="processing/init.js"></script>
+<link rel="stylesheet" type="text/css" media="screen, print, projection" href="css/screen.css" />
+
+<audio id="track1" autobuffer></audio>
+<audio id="track2" autobuffer></audio>
+<audio id="track3" autobuffer></audio>
+<audio id="track4" autobuffer></audio>
+<audio id="track5" autobuffer></audio>
+<audio id="track11" autobuffer></audio>
+<audio id="track12" autobuffer></audio>
+<audio id="track13" autobuffer></audio>
+<audio id="track14" autobuffer></audio>
+<audio id="track15" autobuffer></audio>
+
+<audio id="sfx1" src="music/sfx/hit_block_music.wav" preload="true" autobuffer></audio>
+<audio id="sfx2" src="music/sfx/hit_block_normal.wav" preload="true" autobuffer></audio>
+<audio id="sfx3" src="music/sfx/hit_block_wall.wav" preload="true" autobuffer></audio>
+<audio id="sfx4" src="music/sfx/hit_knifetank.wav" preload="true" autobuffer></audio>
+<audio id="sfx5" src="music/sfx/hit_papertank_self.wav" preload="true" autobuffer></audio>
+<audio id="sfx6" src="music/sfx/hit_papertank_slash.wav" preload="true" autobuffer></audio>
+<audio id="sfx7" src="music/sfx/pt_launch.wav" preload="true" autobuffer></audio>
+
+<style type="text/css">
+/* body {background: #000 url("art_assets/bg.png") no-repeat;} */
+form {display: none;}
+</style>
+<script language="javascript" type="text/javascript">
+
+var LOADED_TRACKS = 0;
+
+function urlquery( name )
+	{
+	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+	  var regexS = "[\\?&]"+name+"=([^&#]*)";
+	  var regex = new RegExp( regexS );
+	  var results = regex.exec( window.location.href );
+	  if( results == null )
+	    return "";
+	  else
+	    return results[1];
+	}
+	
+
+	$(document).ready(function() {		
+		var thisLevel = urlquery('level');
+		if (thisLevel == "") {
+			thisLevel = 1;
+		}
+		
+		if (thisLevel == 1 || thisLevel == 4 || thisLevel == 7 || thisLevel == 10 || thisLevel == 13) {
+			$('#track1').attr('src', 'music/track1_1.mp3');
+			$('#track2').attr('src', 'music/track1_2.mp3');
+			$('#track3').attr('src', 'music/track1_3.mp3');
+			$('#track4').attr('src', 'music/track1_4.mp3');
+			$('#track5').attr('src', 'music/track1_5.mp3');
+			$('#track11').attr('src', 'music/track1_1.ogg');
+			$('#track12').attr('src', 'music/track1_2.ogg');
+			$('#track13').attr('src', 'music/track1_3.ogg');
+			$('#track14').attr('src', 'music/track1_4.ogg');
+			$('#track15').attr('src', 'music/track1_5.ogg');
+		}
+		if (thisLevel == 2 || thisLevel == 5 || thisLevel == 8 || thisLevel == 11 || thisLevel == 14) {
+			$('#track1').attr('src', 'music/track2_1.mp3');
+			$('#track2').attr('src', 'music/track2_2.mp3');
+			$('#track3').attr('src', 'music/track2_3.mp3');
+			$('#track4').attr('src', 'music/track2_4.mp3');
+			$('#track5').attr('src', 'music/track2_5.mp3');
+			$('#track11').attr('src', 'music/track2_1.ogg');
+			$('#track12').attr('src', 'music/track2_2.ogg');
+			$('#track13').attr('src', 'music/track2_3.ogg');
+			$('#track14').attr('src', 'music/track2_4.ogg');
+			$('#track15').attr('src', 'music/track2_5.ogg');
+		}
+		if (thisLevel == 3 || thisLevel == 6 || thisLevel == 9 || thisLevel == 12 || thisLevel == 15) {
+			$('#track1').attr('src', 'music/track3_1.mp3');
+			$('#track2').attr('src', 'music/track3_2.mp3');
+			$('#track3').attr('src', 'music/track3_3.mp3');
+			$('#track4').attr('src', 'music/track3_4.mp3');
+			$('#track5').attr('src', 'music/track3_5.mp3');
+			$('#track11').attr('src', 'music/track3_1.ogg');
+			$('#track12').attr('src', 'music/track3_2.ogg');
+			$('#track13').attr('src', 'music/track3_3.ogg');
+			$('#track14').attr('src', 'music/track3_4.ogg');
+			$('#track15').attr('src', 'music/track3_5.ogg');
+		}
+
+		if ($.browser.mozilla) {
+		
+			$('#track11').load();
+			$('#track12').load();
+			$('#track13').load();		
+			$('#track14').load();
+			$('#track15').load();
+		
+			$('#track11').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track12').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track13').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track14').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track15').bind('canplaythrough', function() {
+				loadingCB();
+			});
+		
+		} else {
+			
+	//		$('#track1').load();
+	//		$('#track2').load();
+	//		$('#track3').load();		
+	//		$('#track4').load();
+	//		$('#track5').load();
+			
+			$('#track1').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track2').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track3').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track4').bind('canplaythrough', function() {
+				loadingCB();
+			});
+
+			$('#track5').bind('canplaythrough', function() {
+				loadingCB();
+			});
+		}
+		
+		
+		
+		$('#level-select').val(thisLevel);
+	});
+	
+	function loadingCB() {
+	//	console.log(thisLoadedTrack);
+	
+		LOADED_TRACKS++;
+		
+		if (LOADED_TRACKS == 5) {
+			//track1.play();
+			initProcessingScripts();
+			$('#loading').css({display: 'none'});
+
+		}
+	
+	}
+</script>
+<script type="application/processing" targetCanvas="pcanvas">
+
+// Global constants
+int speed         = 20;
+float bleedTime   = 1.0;
+int numAudioFiles = 5;
+int audioIndex;
+int initLevel = $('#level-select').val();
+
+boolean showBBs = false; // DEBUG: show bounding boxes.
+
+PFont font = loadFont("Krungthep-25.vlw");
+PImage tank1;
+PImage tank2;
+PImage tank3;
+PImage ripped;
+PImage fixed;
+PImage turret1;
+PImage turret2;
+PImage turret3;
+PImage ghostank1;
+PImage ghostank2;
+PImage ghostank3;
+PImage ghostank4;
+PImage ghosturret;
+PImage greyblock;
+PImage musicblockon;
+PImage musicblockoff;
+ArrayList cannons;
+ArrayList bullets;
+ArrayList targets;
+ArrayList walls;
+ArrayList bloods;
+
+var sfx1;
+var sfx2;
+var sfx3;
+var sfx4;
+var sfx5;
+var sfx6;
+var sfx7;
+
+int points;
+int bulletCounter;
+int hitCounter;
+int seconds;
+int sc;
+int ticks;
+boolean playing;
+boolean win;
+
+ArrayList winphrases;
+ArrayList losephrases;
+int phraseIndex;
+
+class Map
+{
+	var mapData;
+	float width = 10;
+	float height = 10;
+	float objDist = 80;
+	
+	Map(var setMapData)
+	{
+		mapData = setMapData;
+	}
+}
+
+Map map1 = new Map(
+"OOOOOOOOOO\
+OOOOOXOOOO\
+OOOOOOOOCO\
+OOO#OOOOOO\
+OOXOOOOOOO\
+OOOOOTOO#O\
+OOOOOOOXOO\
+#OOOOOOOOO");
+
+Map map2 = new Map(
+"OOOOOOOXO#\
+O#OXOOOTOO\
+OO#OOOTOOO\
+OXOXOOOOOO\
+OOOOOXOOOO\
+OOOOOOOOOO\
+OOTOOOXOOO\
+OOOOOOOOCO");
+
+Map map3 = new Map(
+"OOOOOOOOOO\
+OOOXXOOOCO\
+OOOOXOOOOO\
+OOTOOXOOOO\
+OOOOOTXOOO\
+OXOOOOOOOO\
+OXO#OOXXOO\
+O#OTOO#OOT");
+
+Map map4 = new Map(
+"OOXOOOOXOO\
+OOXOOOOXOC\
+OOXO#OTXOO\
+OTXOXOOXOO\
+OOXO#OOXOO\
+OOXOXOOXOO\
+OO#OXOO#OO\
+OOOOXOOOOTO");
+
+Map map5 = new Map(
+"OOOOOO#XOO\
+OTOOOOXOOO\
+OOOOOO#OOC\
+OTOOOOXOOO\
+OOOOOO#XXO\
+OOOXOOOOOO\
+OOO#OOOOOO\
+TOOXOOTOOO");
+
+Map map6 = new Map(
+"X##XXXOXXX\
+#TOTOOXOOO\
+#OOXOOOOOO\
+XTOOOOXOOO\
+XOOXOOOXOO\
+XOOOOOOOOO\
+XOOXOOOOOO\
+XOOOOOOCOO");
+
+Map map7 = new Map(
+"OOOOOOOOOO\
+OCOOXXXXOO\
+OOOXOTOOXO\
+OOOXO##OXO\
+OOOXO##OXO\
+OOOXOOOTXO\
+OTOOXXXXOO\
+OOOOOOOOO");
+
+Map map8 = new Map(
+"OO#OOOOXO#\
+OOOOTOOOOO\
+XXXOOXXXOT\
+OOOOOX#XOO\
+OOOOOXXXOO\
+OOOOOOOOOT\
+OOCOOOOXOT\
+OOOOOOOXO#");
+
+Map map9 = new Map(
+"#OOOOOTOOT\
+OOOOO#OOXO\
+OOOOOOOO#O\
+OOOOOTOOOO\
+XOOOOOOOOO\
+OXOOOOOOOO\
+OOXOOOOOOO\
+OCOXOOOOO#");
+
+Map map10 = new Map(
+"OOOOOOOOOO\
+OOTTTTOOOO\
+OOOOOOOCOO\
+OOO#OOOOOO\
+OOX#OOOOOO\
+OOOOOOOO#O\
+OOOOOOOX#O\
+OOOOCOOOOO");
+
+Map map11 = new Map(
+"TTTTTTTTTT\
+OOXOXOXOOO\
+OOOOOOOOOO\
+#OXO#OXO#O\
+OOOOOOOOOO\
+OOXOXOXOOO\
+OOOOOOOOOO\
+OOOO#OOOC");
+
+Map map12 = new Map(
+"TTTTTTTTTT\
+OOXOXOXOOO\
+OOOOOOOOOO\
+#OXO#OXO#O\
+OOOOOOOOOO\
+OOXOXOXOOO\
+OOOOOOOOOO\
+OCOO#OOOC");
+
+Map map13 = new Map(
+"TTOTOTOTTT\
+OOXOXOXOOO\
+OOOOOOOOOO\
+OO#OOOOO#O\
+OO#OOOOO#O\
+TOOOOOOOOT\
+OOOOOOOOOO\
+OOOOCOOOOO");
+
+Map map14 = new Map(
+"OOOOOOOOTT\
+OCXOXOXOOT\
+OOOOOOOOOO\
+XO#OXO#OXO\
+OOOOOOOOOO\
+OOXOXOXOOO\
+TOOOOOOOOO\
+TTOO#OOOC");
+
+Map map15 = new Map(
+"OOOOOOOOOO\
+OCOOOOOOOC\
+OOOOOOOOOO\
+OO#OOO#OOO\
+OOOO#OOO#O\
+OOOOOOOOOO\
+OOOOOOOOOO\
+OCOOOOOOOC");
+
+
+class Wall {
+  float x;
+  float y;
+  float d = 70;
+  boolean on;
+  boolean toggleable;
+  Wall(float X, float Y, boolean toggle) {
+	x = X+d/2;
+	y = Y+d/2;
+	toggleable = toggle;
+	on = true;
+  }
+  float top()	 { return y - d/2; }
+  float bottom() { return y + d/2; }
+  float left()	 { return x - d/2; }
+  float right()	 { return x + d/2; }
+
+  void show() {
+	if (toggleable) {	
+		stroke(0,0,0,255);
+		strokeWeight(2);
+		int hue = 200;
+		if (!toggleable) {
+		  fill(125);
+		}
+		else if (on) {
+		  image(musicblockoff, x-d/2,y-d/2);
+		}
+		else {
+		  image(musicblockon, x-d/2,y-d/2);
+		}
+	}
+	else
+		image(greyblock,x-d/2,y-d/2);
+	
+	for (int i=0;i<bullets.size();i++) {
+		Bullet b = bullets.get(i);
+		PVector l = new PVector(b.loc.x,b.loc.y);
+		if (l.x>=x-d/2&&l.x<=x+d/2&&l.y >=y-d/2&&l.y<=y+d/2) {
+  
+
+	
+		if (toggleable) {
+			on = !on;
+			// switch to the next audio track
+			
+			/*morgan tracks switching hack: swwitches back and forth through audio index based on numBlocksOn */
+			if (on == false)
+			{
+				numBlocksOn = numBlocksOn+1; 
+			}
+			else if (on == true)
+			{
+				numBlocksOn = numBlocksOn-1; 
+			}
+
+			var prev = getTrack(audioIndex);
+			//audioIndex += 1;
+			
+			audioIndex = numBlocksOn;
+			audioIndex += 1;
+			if (audioIndex > numAudioFiles)
+			audioIndex = 1;
+			var next = getTrack(audioIndex);
+			next.volume = 0;
+			next.play();
+			next.currentTime = prev.currentTime;	
+			next.volume = 1;
+			prev.volume = 0;
+			prev.pause();
+
+			playSfx(1);
+			
+			/*
+			var prev = getTrack(audioIndex);
+			audioIndex += 1;
+			if (audioIndex > numAudioFiles)
+			audioIndex = 1;
+			var next = getTrack(audioIndex);
+			next.volume = 0;
+			next.play();
+			next.currentTime = prev.currentTime;	
+			next.volume = 1;
+			prev.volume = 0;
+			prev.pause();
+			*/
+		} else {
+			playSfx(2);
+		}
+
+		// reflect the bullet
+		PVector dir = new PVector(b.dir.x,b.dir.y);
+		if (dir.x == 0) {
+		  (bullets.get(i)).flipy(); 
+		}
+		else if (dir.y == 0) {
+		  (bullets.get(i)).flipx(); 
+		}
+		else {
+		  float dx = 0;
+		  if (dir.x > 0) {
+			dx = l.x - (x-d/2);
+		  }
+		  else {
+			dx = l.x - (x+d/2);
+		  }
+		  float dy = dx*dir.y/dir.x;		 
+
+		  float yy = l.y - dy;
+		  if (yy==y-d/2 || yy == y+d/2) {
+			(bullets.get(i)).flipx();
+			(bullets.get(i)).flipy();
+		  } 
+		  else if (yy>y-d/2 && yy < y+d/2) {
+			(bullets.get(i)).flipx();
+		  }
+		  else {
+			(bullets.get(i)).flipy(); 
+		  }
+		}
+	  }	 
+	}
+  }
+}
+
+class Bullet
+{
+	PVector loc = new PVector();
+	PVector dir = new PVector();
+	float angle;
+	int age = 0;
+	boolean alive;
+	Bullet(Cannon c, float x, float y)
+	{
+		loc.x = x;
+		loc.y = y;
+		PVector center = new PVector(c.loc.x,c.loc.y);
+		PVector turret = new PVector(c.cX,c.cY);
+		dir = PVector.sub(turret, center);
+		alive = true;
+	}
+	void run()
+	{
+		noStroke();
+		fill(100);
+		ellipse(loc.x,loc.y,10,10);
+		loc.add(new PVector(dir.x/4,dir.y/4));
+		if (loc.x < 0 || loc.x > width) {
+		  flipx(); 
+			playSfx(3);
+		}
+		if (loc.y < 0 || loc.y > height) {
+			flipy();
+			playSfx(3);
+		}
+		age++;
+		if (age>300)  alive = false;
+	}
+	void flipx()
+	{
+		dir.x = -dir.x;
+	}
+	void flipy()
+	{
+		dir.y = -dir.y;
+	}
+}
+
+class Target
+{
+	int attackTimeout = 8; // give up attacking after 8 seconds
+	int destTimeout   =  5; // give up moving to random point after 5 seconds
+	float d           = 78; // bounding box size
+	
+	PVector loc;
+	PVector dest;
+
+	boolean alive;
+	int lives;
+	int targetIndex;
+	float speed = 3;
+	int sprite = 0;
+	float angle = 0; // angle to which we rotate to draw the sprite. radians.
+	int lastDirChange = 0;
+	float turretAngle = 0;
+	int timeOfDeath = 0;
+	boolean attacking;
+	boolean canAttack = true;
+	int timeOfAttack	= 0;
+	boolean hitTank;
+
+  Target(float X, float Y, int LIVES)
+  {
+	loc = new PVector();
+	loc.x = X;
+	loc.y = Y;
+	dest = new PVector();
+	dest.x = random(width);
+	dest.y = random(height);
+	this.lives = LIVES;
+	alive = true;
+	target = -1;
+	hitTank = false;
+  }
+
+  float top()	 { return loc.y - d/2; }
+  float bottom() { return loc.y + d/2; }
+  float left()	 { return loc.x - d/2; }
+  float right()	 { return loc.x + d/2; }
+
+	void show()
+	{
+		checkBulletHits();
+		
+		if (playing && !alive) {
+			if (seconds - timeOfDeath > 15)
+			  alive = true;
+			
+			else if (seconds - timeOfDeath > 13 && ticks % 2 == 0) {
+				float dx = random(5) - 2.5;
+				float dy = random(5) - 2.5;
+				translate(loc.x+dx,loc.y+dy);
+				rotate(angle);
+				image(ghostank1,-d/2,-d/2);
+				rotate(-angle);
+				translate(-loc.x-dx,-loc.y-dy);
+				return;
+
+			}
+			else {	
+				translate(loc.x,loc.y);
+				rotate(angle);
+				image(ghostank1,-d/2,-d/2);
+				rotate(-angle);
+				translate(-loc.x,-loc.y);
+				return;
+			}
+		}
+	
+		if (playing) {
+			// Attempt to attack, timeout attacks,
+			// and timeout mandatory non-violent periods between attacks
+			if (canAttack) {
+				for (int i = 0; i < cannons.size(); ++i) {
+					Cannon c = cannons.get(i);
+					float distance = loc.dist(c.loc);
+					if (distance < 250) {
+						targetIndex= i;
+						attacking = true;
+						canAttack = false; // can't attack again immediately
+						timeOfAttack = seconds;
+						break;
+					}
+				}
+			}
+	
+			if (attacking) {
+				// update our target's location
+				Cannon c = cannons.get(targetIndex);
+				float distance = loc.dist(c.loc);
+				dest.x = c.loc.x;
+				dest.y = c.loc.y;
+		
+				if (seconds - timeOfAttack > attackTimeout) {
+					attacking = false;
+					canAttack = false;
+				}
+			}
+			else if (!canAttack && seconds - timeOfAttack > attackTimeout+destTimeout) {
+				canAttack = true;
+			}
+		}
+		else { // !playing
+			if (!hitTank)
+				attacking = false;
+		}
+	
+		// wander around
+		boolean timeout = (seconds - lastDirChange > 5);
+		boolean arrived = loc.dist(dest) < d;
+		if (!attacking && ( timeout || arrived )) {
+			dest.x = random(width);
+			dest.y = random(height);
+			lastDirChange = seconds;
+		}
+
+		// move toward destination, pausing occasionally.
+		if (random(100) > 10)
+			moveToward(dest.x,dest.y); 
+		updateTurretAngle();
+
+		translate(loc.x,loc.y);
+		rotate(angle);
+		switch (sprite) {
+		  case 0: image(ghostank1,-d/2,-d/2); break;
+		  case 1: image(ghostank2,-d/2,-d/2); break;
+		  case 2: image(ghostank3,-d/2,-d/2); break;
+		  case 3: image(ghostank4,-d/2,-d/2); break;
+		}
+		if (ticks % 2 == 0) {
+			sprite = (sprite+1)%4;
+		}
+		rotate(-angle);
+		rotate(turretAngle);
+		image(ghosturret,-40,-30)
+		rotate(-turretAngle);
+		translate(-loc.x,-loc.y);
+	
+		if (showBBs) {
+			strokeWeight(1);
+			noFill();
+			stroke(0,0,255);
+			rect(loc.x-d/2,loc.y-d/2,d,d);
+		}
+
+		checkTankHits();
+	}
+	
+	void checkTankHits(){
+		for (int i=0;i<cannons.size();i++)
+		{
+			fill(255);
+			Cannon c = cannons.get(i);
+			float minx = left()	  - c.d/2 - 1;
+			float maxx = right()  + c.d/2 + 1;
+			float miny = top()	  - c.d/2 - 1;
+			float maxy = bottom() + c.d/2 + 1;
+
+			if (c.loc.x>=minx && c.loc.x<=maxx && c.loc.y >= miny && c.loc.y <= maxy)
+			{
+				if (playing) {
+					phraseIndex = int(random(losephrases.size()));
+					playSfx(6);	
+				}
+				
+				playing = false;
+				hitTank = true;
+			}
+		}
+	}
+
+	void updateTurretAngle() {
+		if (attacking){
+			float distance = loc.dist(dest);
+			turretAngle = atan2(dest.y-loc.y,dest.x-loc.x) - PI/2 + PI/4*sin(0.05*millis());
+		}
+		else {
+			if (playing) {
+				for (int i = 0; i < cannons.size(); ++i) {
+					Cannon c = cannons.get(i);
+					float distance = loc.dist(c.loc);
+					if (distance < 350) {
+						turretAngle += PI/10;
+						return;
+					}
+				}
+			}
+			turretAngle += PI/50;
+		}
+	}
+	void checkBulletHits() {
+		for (int i=0;i<bullets.size();i++)
+		{
+			Bullet b = bullets.get(i);
+			if (!b.alive) continue;
+			PVector l = new PVector(b.loc.x,b.loc.y);
+			if (l.x>=left()&&l.x<=right()&&l.y >=top()&&l.y<=bottom()) {
+				alive = false;
+				bullets.remove(b);
+				points++;
+				hitCounter++;
+				timeOfDeath = seconds;
+				//Spawn blood effect when enemy dies
+				bloods.add(new ParticleSystem(200, bleedTime, new Vector3D(loc.x,loc.y,0)));
+				playSfx(4);
+			}
+		}
+	}
+
+  void moveToward(float x, float y) {
+	   float oldx = loc.x;
+	   float oldy = loc.y;
+	   if (x < left()) {
+		 moveLeft(speed);
+		 angle = PI/2;		  
+		 if (loc.x != oldx || loc.y != oldy) {
+			return;
+		 }
+	   }
+	   if (x > right()) {
+		 moveRight(speed); 
+		 angle = -PI/2;
+		 if (loc.x != oldx || loc.y != oldy) {
+			return;	  
+		 }
+	   }
+	   if (y < top()) {
+		 moveUp(speed);	 
+		 angle = PI;
+		 if (loc.x != oldx || loc.y != oldy) {
+			return;
+		 }
+	   }
+	   if (y > bottom()) {
+		 moveDown(speed);
+		 angle = 0;
+		 if (loc.x != oldx || loc.y != oldy) {
+			return;
+		 }
+	   }
+  }
+
+ void moveUp(float dy) {
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.left()	 - d/2;
+	  float maxx = wall.right()	 + d/2;
+	  float miny = wall.bottom() + d/2;
+	  float maxy = wall.bottom() + d/2 + dy;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = top() - wall.bottom() - 1;
+	  }
+	}
+	for (int i=0;i<cannons.size();++i) {
+	  Cannon c = cannons.get(i);
+	  float minx = c.left()	  - d/2;
+	  float maxx = c.right()  + d/2;
+	  float miny = c.bottom() + d/2;
+	  float maxy = c.bottom() + d/2 + dy;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = top() - c.bottom() - 1;
+	  }
+	}
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+	  if (wall == this) continue;
+	  float minx = wall.left()	 - d/2;
+	  float maxx = wall.right()	 + d/2;
+	  float miny = wall.bottom() + d/2;
+	  float maxy = wall.bottom() + d/2 + dy;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = top() - wall.bottom() - 1;
+	  }
+	}
+	loc.y -= dy
+
+	if (top() < 0) {
+	  loc.y = d/2;
+	}
+  }
+
+  void moveDown(float dy) {
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.left() - d/2;
+	  float maxx = wall.right() + d/2;
+	  float miny = wall.top() - d/2 - dy;
+	  float maxy = wall.top() - d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = wall.top() - bottom() - 1;
+	  }
+	}
+	for (int i=0;i<cannons.size();++i) {
+	  Cannon wall = cannons.get(i);
+	  float minx = wall.left()  - d/2;
+	  float maxx = wall.right() + d/2;
+	  float miny = wall.top()   - d/2 - dy;
+	  float maxy = wall.top()   - d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = wall.top() - bottom() - 1;
+	  }
+	}
+	
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+		if (wall == this) continue;
+	  float minx = wall.left()  - d/2;
+	  float maxx = wall.right() + d/2;
+	  float miny = wall.top()   - d/2 - dy;
+	  float maxy = wall.top()   - d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dy = wall.top() - bottom() - 1;
+	  }
+	}	 
+	loc.y += dy
+
+	if (bottom() > height) {
+	  loc.y = height-d/2;
+	}
+  }
+
+  void moveLeft(float dx) {
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.right()	 + d/2;
+	  float maxx = wall.right()	 + d/2 + dx;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = left() - wall.right() - 1;
+	  }
+	}
+	for (int i=0;i<cannons.size();++i) {
+	  Cannon wall = cannons.get(i);
+	  float minx = wall.right()	 + d/2;
+	  float maxx = wall.right()	 + d/2 + dx;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = left() - wall.right() - 1;
+	  }
+	}
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+		if (wall == this) continue;
+		float minx = wall.right()	 + d/2;
+	  float maxx = wall.right()	 + d/2 + dx;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = left() - wall.right() - 1;
+	  }
+	}	 
+	loc.x -= dx
+
+	if (left() < 0) {
+	  loc.x = d/2;
+	}
+  }
+  void moveRight(float dx) {
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.left()	 - d/2 - dx;
+	  float maxx = wall.left()	 - d/2;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = wall.left() - right() - 1;
+	  }
+	}
+	for (int i=0;i<cannons.size();++i) {
+	  Cannon wall = cannons.get(i);
+	  float minx = wall.left()	 - d/2 - dx;
+	  float maxx = wall.left()	 - d/2;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = wall.left() - right() - 1;
+	  }
+	}
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+		if (wall == this) continue;
+	  float minx = wall.left()	 - d/2 - dx;
+	  float maxx = wall.left()	 - d/2;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = wall.left() - right() - 1;
+	  }
+	}	
+	loc.x += dx
+
+	if (right() > width) {
+	  loc.x = width-d/2;
+	}
+  }
+}
+
+class Cannon {
+  float d;
+  float r;
+  float cX;
+  float cY;
+  PVector loc = new PVector();
+  int sprite = 0;
+  float baseAngle = 0;
+  float firing = 0;
+  float tOffsetx = 23;
+  float tOffsety = 20;
+  boolean stun = false;
+  float lastStunTime = 0;
+  float stunTime = 0;
+  float stunTimer = 5;
+
+  // frame counts for turrent animation
+  int tf1 = 8;
+  int tf2 = 5;
+  int tf3 = 5;
+  float firingFrames;
+ 
+  Cannon(float x, float y) {
+	d = 75;
+	r = d/2;
+	loc.x = x;
+	loc.y = y;
+	firingFrames = tf1 + tf2 + tf3;
+  }
+  float top()	 { return loc.y - d/2; }
+  float bottom() { return loc.y + d/2; }
+  float left()	 { return loc.x - d/2; }
+  float right()	 { return loc.x + d/2; }
+
+  void show() {
+	
+	updateStun();
+
+	smooth();
+
+	float angle = atan2(mouseY-loc.y,mouseX-loc.x);
+
+	//Changed this from using r to d as the tank was shooting itself with the short barrel
+	cX = (d * cos(angle)) + loc.x;
+	cY = (d * sin(angle)) + loc.y;
+
+	translate(loc.x,loc.y);
+	rotate(baseAngle-PI/2);
+	if (stun){
+		if (stunTimer - stunTime <= 2) {
+			image(fixed,-d/2,-d/2);
+		} else {
+			image(ripped, -d/2,-d/2);
+		}
+	}
+	else {
+		switch (sprite) {
+		  case 0: image(tank1,-d/2,-d/2); break;
+		  case 1: image(tank2,-d/2,-d/2); break;
+		  case 2: image(tank3,-d/2,-d/2); break;
+		}
+	}
+	rotate(-baseAngle+PI/2);
+	rotate(angle - PI/2);
+
+	if (firing > firingFrames - tf1)
+		image(turret2,-tOffsetx,-tOffsety);
+	else if ( firing > firingFrames - tf1 - tf2)
+		image(turret3,-tOffsetx,-tOffsety);
+	else if ( firing > 0)
+		image(turret2,-tOffsetx,-tOffsety);
+	else
+		image(turret1,-tOffsetx,-tOffsety);
+	rotate(-angle+PI/2);
+	translate(-loc.x,-loc.y);
+
+	if (firing == firingFrames - tf1) {
+	  bullets.add(new Bullet(this,cX,cY));
+	  bulletCounter++;
+	}
+
+	if (firing > 0) 
+	  --firing;	   
+	
+	if (showBBs) {
+	  // show bounding box
+	  noFill();
+	  strokeWeight(1);
+	  stroke(0,255,0);
+	  rect(loc.x-d/2,loc.y-d/2,d,d);
+	  line(loc.x,loc.y,cX,cY);
+	}
+	
+	//Bullet to cannon test
+	for (int i=0;i<bullets.size();i++)
+	{
+		Bullet b = bullets.get(i);
+		if (!b.alive) continue;
+
+		PVector l = new PVector(b.loc.x,b.loc.y);
+		if (l.x>=left()&&l.x<=right()&&l.y >=top()&&l.y<=bottom()) {
+			stun = true;
+			lastStunTime = millis() / 1000.0;
+			stunTime = 0;
+			bullets.remove(b);
+			//Spawn blood effect when cannon hit with bullet
+			bloods.add(new ParticleSystem(200, bleedTime, new Vector3D(loc.x,loc.y,0)));
+			playSfx(5);
+		}
+	 }
+  }
+  
+	void updateStun()
+	{
+		if (stun)
+		{
+			stunTime += millis() / 1000.0 - lastStunTime;
+			lastStunTime = millis() / 1000.0;
+			if (stunTime >= stunTimer)
+			{
+				//console.log("Stop stun!");
+				stunTime = 0;
+				stun = false;
+			}
+		}
+	}
+
+	void fire() {
+		firing = firingFrames;
+		playSfx(7);
+	}
+
+	void moveUp(float dy) {
+		if (stun)
+		{
+			return;
+		}
+		for (int i=0;i<walls.size();++i) {
+			Wall wall = walls.get(i);
+			float minx = wall.left()	 - d/2;
+			float maxx = wall.right()	 + d/2;
+			float miny = wall.bottom() + d/2;
+			float maxy = wall.bottom() + d/2 + dy;
+			if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+			dy = top() - wall.bottom();
+		  }
+		}
+		for (int i=0;i<targets.size();++i) {
+			Target wall = targets.get(i);
+			float minx = wall.left()	 - d/2;
+			float maxx = wall.right()	 + d/2;
+			float miny = wall.bottom() + d/2;
+			float maxy = wall.bottom() + d/2 + dy;
+			if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+			dy = top() - wall.bottom();
+		  }
+		}
+		loc.y -= dy
+
+		if (top() < 0) {
+			loc.y = d/2;
+		}
+		sprite = (sprite+1)%3;
+		baseAngle = -PI/2;
+ 	}
+
+	void moveDown(float dy) {
+		if (stun)
+		{
+			return;
+		}
+		for (int i=0;i<walls.size();++i) {
+			Wall wall = walls.get(i);
+			float minx = wall.left() - d/2;
+			float maxx = wall.right() + d/2;
+			float miny = wall.top() - d/2 - dy;
+			float maxy = wall.top() - d/2;
+			if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+				dy = wall.top() - bottom() - 1;
+			}
+		}
+		for (int i=0;i<targets.size();++i) {
+			Target wall = targets.get(i);
+			float minx = wall.left() - d/2;
+			float maxx = wall.right() + d/2;
+			float miny = wall.top() - d/2 - dy;
+			float maxy = wall.top() - d/2;
+			if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+				dy = wall.top() - bottom() - 1;
+			}
+		}
+		loc.y += dy
+
+		if (bottom() > height) {
+			loc.y = height-d/2;
+		}
+		sprite = (sprite+1)%3;
+		baseAngle = PI/2;
+	}
+
+  void moveLeft(float dx) {
+	 if (stun)
+	{
+		return;
+	}
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.right()	 + d/2;
+	  float maxx = wall.right()	 + d/2 + dx;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = left() - wall.right() - 1;
+	  }
+	}
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+	  float minx = wall.right()	 + d/2;
+	  float maxx = wall.right()	 + d/2 + dx;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = left() - wall.right() - 1;
+	  }
+	}
+	loc.x -= dx
+
+	if (left() < 0) {
+	  loc.x = d/2;
+	}
+	sprite = (sprite+1)%3;
+	baseAngle = PI;
+  }
+  void moveRight(float dx) {
+	 if (stun)
+	{
+		return;
+	}
+	for (int i=0;i<walls.size();++i) {
+	  Wall wall = walls.get(i);
+	  float minx = wall.left()	 - d/2 - dx;
+	  float maxx = wall.left()	 - d/2;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = wall.left() - right() - 1;
+	  }
+	}
+	for (int i=0;i<targets.size();++i) {
+	  Target wall = targets.get(i);
+	  float minx = wall.left()	 - d/2 - dx;
+	  float maxx = wall.left()	 - d/2;
+	  float miny = wall.top()	 - d/2;
+	  float maxy = wall.bottom() + d/2;
+	  if (loc.x >= minx && loc.x <= maxx && loc.y >= miny && loc.y <= maxy) {
+		dx = wall.left() - right() - 1;
+	  }
+	}
+	loc.x += dx
+
+	if (right() > width) {
+	  loc.x = width-d/2;
+	}
+	sprite = (sprite+1)%3;
+	baseAngle = 0;
+  }
+
+}
+
+//currLevel = 1;
+currLevel = int($('#level-select').val());
+
+void setup() {
+	cannons = new ArrayList();
+	bullets = new ArrayList();
+	targets = new ArrayList();
+	walls   = new ArrayList();
+	bloods  = new ArrayList();
+	points        = 0;
+	bulletCounter = 0;
+	hitCounter    = 0;
+	seconds       = 0;
+	sc            = 0;
+	ticks         = 0;
+	win           = false;
+	playing = true;
+	audioIndex = 1;
+	numBlocksOn = 0;
+	
+	
+	//CF next level hack	
+	initLevel = int(currLevel);
+	
+	initSfx();
+	
+	size(960,640);
+	frameRate(50);
+	cursor(CROSS);
+	
+	if (initLevel == 1) {
+		generateMap(map1);
+	} else if (initLevel == 2) {
+		generateMap(map2);
+	} else if (initLevel == 3) {
+		generateMap(map3);
+	} else if (initLevel == 4) {
+		generateMap(map4);
+	} else if (initLevel == 5) {
+		generateMap(map5);
+	} else if (initLevel == 6) {
+		generateMap(map6);
+	} else if (initLevel == 7) {
+		generateMap(map7);
+	} else if (initLevel == 8) {
+		generateMap(map8);
+	} else if (initLevel == 9) {
+		generateMap(map9);
+	} else if (initLevel == 10) {
+		generateMap(map10);
+	} else if (initLevel == 11) {
+		generateMap(map11);
+	} else if (initLevel == 12) {
+		generateMap(map12);
+	} else if (initLevel == 13) {
+		generateMap(map13);
+	} else if (initLevel == 14) {
+		generateMap(map14);
+	} else if (initLevel == 15) {
+		generateMap(map15);
+	} else {
+		generateMap(map1);
+	}
+  
+	losephrases = new ArrayList();
+	losephrases.add("Nice Knifehole!");
+	losephrases.add("You've been KnifeTanked!");
+	losephrases.add("Stab Stab Stab Stab!");
+	losephrases.add("ABC: Always Be Cutting.");
+	losephrases.add("Quick, change the channel!");
+	losephrases.add("Pick up that can.");
+	losephrases.add("Command Z that!");
+	losephrases.add("I am sorry, I couldn't understand what you just said.. It sounded like 'Aaaaarrrrrrrgh!'");
+	losephrases.add("Your tank doesn't have enough knife!");
+	losephrases.add("KnifeTank looks forward to stabbing you again soon.");
+	losephrases.add("It slices, it dices, it makes julienne fries! It's KnifeTank!")
+	losephrases.add("Nice sarcasm... not!");
+	losephrases.add("Looks like somebody brought a gun to a KnifeTank fight.");
+	losephrases.add("Gimme a Knife! Gimme a Tank! What does it spell? KnifeTank!");
+	losephrases.add("Maybe you should go play some SpoonTank.");
+	losephrases.add("How many tanks could a KnifeTank knife if a KnifeTank could knife tanks?!")
+	
+	winphrases = new ArrayList();
+	winphrases.add("Whatever... You won't win again.");
+	winphrases.add("Needs more KnifeTank.");
+	winphrases.add("Human error.");
+	winphrases.add("I’m sorry, but your princess is in another castlehole");
+	winphrases.add("You only won because KnifeTank let you.");
+	winphrases.add("Big deal, you beat one level.");
+	winphrases.add("You probably cheated, but you won't beat the next level.");
+	winphrases.add("KnifeTank's blades must need sharpening.");
+	winphrases.add("KnifeTank is just lulling you into a false sense of security.");
+	
+
+  tank1 = loadImage("art_assets/body1.png");
+  tank2 = loadImage("art_assets/body2.png");
+  tank3 = loadImage("art_assets/body3.png");
+	ripped = loadImage("art_assets/ripped1.png");
+	fixed = loadImage("art_assets/fixed1.png");
+  turret1 = loadImage("art_assets/turret1.png");
+  turret2 = loadImage("art_assets/turret2.png");
+  turret3 = loadImage("art_assets/turret3.png");
+  ghostank1 = loadImage("art_assets/kt_enemy02.png");
+  ghostank2 = loadImage("art_assets/kt_enemy03.png");
+  ghostank3 = loadImage("art_assets/kt_enemy04.png");
+  ghostank4 = loadImage("art_assets/kt_enemy05.png");
+  ghosturret = loadImage("art_assets/kt_enemy01.png");
+  greyblock = loadImage("art_assets/kt_greywall02.png");
+	musicblockon = loadImage("art_assets/musicblockon.png");
+	musicblockoff = loadImage("art_assets/musicblockoff.png");
+  var audioElement = getTrack(1);
+  audioElement.loop = true;
+  audioElement.volume = 1;
+  audioElement.play();
+
+	for (int i=2; i <= numAudioFiles; ++i) {
+		var audioElement = document.getElementById("track"+str(i));
+		audioElement.loop = true;
+		audioElement.volume = 0;
+	}
+}
+
+void generateMap(Map fromMap)
+{
+	for (x=0; x<fromMap.mapData.length; x++)
+	{
+		c = fromMap.mapData.charAt(x);
+	if (c == "#")		// toggleable wall
+	{
+		walls.add(new Wall((x % fromMap.width) * fromMap.objDist, floor((x / fromMap.height)) * fromMap.objDist,true));
+	}
+	if (c == "X")		// non-toggleable wall
+	{
+		walls.add(new Wall((x % fromMap.width) * fromMap.objDist, floor((x / fromMap.height)) * fromMap.objDist,false));
+	}
+	else if (c == "T")
+	{
+			targets.add(new Target((x % fromMap.width) * fromMap.objDist, floor((x / fromMap.height)) * fromMap.objDist,1));
+	}
+	else if (c == "C")
+	{
+		cannons.add(new Cannon((x % fromMap.width) * fromMap.objDist, floor((x / fromMap.height)) * fromMap.objDist));
+	}
+	}
+}
+
+void draw()
+{
+	play();
+	if (!playing)
+		gameover();
+}
+
+void play()
+{
+	clear();
+	drawBackground();
+
+	if (sc == 50)
+	{
+		seconds++;
+		sc=0;  
+	}
+	for(int k=0;k<bullets.size();k++)
+	{
+		Bullet b = bullets.get(k);
+		if (b.alive)
+			b.run();	
+		else
+			bullets.remove(b);
+	}
+	for(int j=0;j<walls.size();j++)
+	{
+		(walls.get(j)).show();	
+	}
+	for(int j=0;j<targets.size();j++)
+	{
+		(targets.get(j)).show();  
+	}
+	for(int i=0;i<cannons.size();i++)
+	{
+		(cannons.get(i)).show();
+	}
+
+	// Check for win. 
+	testFTW();
+	
+	// run blood particle stuff
+	for (int i=0;i<bloods.size();) {
+		ParticleSystem b = bloods.get(i);
+		b.run();
+		if (b.dead()) {
+			bloods.remove(i);
+		}
+		else {
+			i++;
+		}
+	}
+	
+	// display score and level.
+	font = loadFont("Courier New");
+	textFont(font, 20);
+	fill(255,255,0);
+	text("Level: " + str(currLevel), 5, 25);
+	text("Score: " + str(getScore()), 5, 45);
+
+	// update time counters
+	++sc;
+	++ticks;
+}
+
+void testFTW()
+{
+	if (!playing)
+		return;
+		
+	int bulletsAlive = 0;
+	for(int j=0;j<bullets.size();j++) {
+		if (bullets.get(j).alive)
+		bulletsAlive ++;
+	}
+	int wallsOn = 0;
+	for(int j=0;j<walls.size();j++) {
+		Wall w = walls.get(j);
+		if (w.toggleable && w.on)
+			wallsOn ++;
+	}
+	if (bulletsAlive ==0 && wallsOn ==0) {
+		win = true;
+		playing = false;
+		phraseIndex = int(random(winphrases.size()));
+	}	
+}
+
+
+void drawBackground() {
+	// draw some horizontal lines that look like notebook paper.
+	//taking this our for now.
+	/*
+	stroke(100,100,255,125);
+	for (int i=25;i<height; i+= 25) {
+		strokeWeight(1);
+		line(0,i,width,i);
+	}
+	stroke(255,100,100);
+	line(width*0.85,0,width*0.85,height);
+	*/
+}
+
+
+void mousePressed()
+{
+	if (playing)
+	{
+		addBullet();
+	}
+}
+
+float getScore()
+{
+	return int(((points)*54.73)-((bulletCounter-hitCounter)*10));
+}
+
+void gameover()
+{
+	int score = getScore();
+	
+	fill(125,225);
+	float w = 500;
+	float h = 200;
+	noStroke();
+	rect(width/2-w/2,height/2-h/2,w,h);
+	strokeWeight(5);
+	float fontsize = 12;
+	font = loadFont("Courier New");
+	textFont(font, 20);
+	textAlign(CENTER);
+	fill(255,255,0);
+	String s = "";
+
+	if (win) {
+		s = winphrases.get(phraseIndex);
+		text("WINNER!", width/2 - 7*fontsize/2, height/2-35);
+	}
+	else{
+		s = losephrases.get(phraseIndex);
+		text("LOSER!", width/2 - 6*fontsize/2, height/2-35);
+	}
+	text(s, width/2-s.length()*fontsize/2, height/2+15);
+	
+	s = "Your score was: " + score;
+	text(s, width/2-s.length()*fontsize/2, height/2+40);
+
+	s = "Stab the spacebar to continue.";
+	text(s, width/2-s.length()*fontsize/2, height/2+65);
+}
+void keyPressed()
+{
+  if (!playing)
+  {
+	if (win)
+	{
+		if (key == ' ')
+		{
+			currLevel = currLevel+1;
+			//alert(currLevel);
+			//setup();
+			document.location = "main.html?level="+currLevel;
+		 }
+	}
+	else
+	{
+		if (key == ' ')
+	 	{
+	 		//alert("lose");
+			setup();
+	 	}
+	 }
+  }
+  else if (key == 'w') {
+	for (int k=0;k<cannons.size();k++) {
+	  (cannons.get(k)).moveUp(speed);  
+	}  
+  }
+  else if (key == 's') { 
+	for (int k=0;k<cannons.size();k++) {
+	  (cannons.get(k)).moveDown(speed);	 
+	}
+  }
+  else if (key == 'a') {
+	for (int k=0;k<cannons.size();k++) {
+	  (cannons.get(k)).moveLeft(speed);	 
+	}
+  }
+  else if (key == 'd') {
+	for (int k=0;k<cannons.size();k++) {
+	  (cannons.get(k)).moveRight(speed);  
+	}
+  }
+  else if (keyPressed&&key==CODED) {
+	if (keyCode == UP) { 
+	  for (int k=0;k<cannons.size();k++) {
+		(cannons.get(k)).moveUp(speed);	 
+	  }
+	} 
+	if (keyCode == DOWN) {
+	  for (int k=0;k<cannons.size();k++) {
+		(cannons.get(k)).moveDown(speed);  
+	  }
+	}
+	if (keyCode == LEFT) {
+	  for (int k=0;k<cannons.size();k++) {
+		(cannons.get(k)).moveLeft(speed);  
+	  }
+	}
+	if (keyCode == RIGHT){
+	  for (int k=0;k<cannons.size();k++) {
+		(cannons.get(k)).moveRight(speed);	
+	  }
+	}
+  }
+
+}
+
+void getTrack(int index) {
+  var track = document.getElementById("track" + str(index));
+  boolean canPlayMp3 = ("no" != track.canPlayType("audio/mpeg")) && ("" != track.canPlayType("audio/mpeg"));
+  if (canPlayMp3) {
+	return track;
+  }
+  else {
+	return document.getElementById("track1" + str(index));
+  }
+}
+
+
+void initSfx() {
+	
+	sfx1 = document.getElementById("sfx1");
+	sfx1.load();
+	sfx1.loop = false;
+	sfx1.volume = 0.3;
+
+	sfx2 = document.getElementById("sfx2");
+	sfx2.load();
+	sfx2.loop = false;
+	sfx2.volume = 0.3;
+
+	sfx3 = document.getElementById("sfx3");
+	sfx3.load();
+	sfx3.loop = false;
+	sfx3.volume = 0.3;
+
+	sfx4 = document.getElementById("sfx4");
+	sfx4.load();
+	sfx4.loop = false;
+	sfx4.volume = 0.3;
+
+	sfx5 = document.getElementById("sfx5");
+	sfx5.load();
+	sfx5.loop = false;
+	sfx5.volume = 0.3;
+
+	sfx6 = document.getElementById("sfx6");
+	sfx6.load();
+	sfx6.loop = false;
+	sfx6.volume = 0.3;
+
+	sfx7 = document.getElementById("sfx7");
+	sfx7.load();
+	sfx7.loop = false;
+	sfx7.volume = 1;
+
+	
+}
+
+void playSfx(int index) {
+  
+	//var sfx = document.getElementById("sfx" + str(index));
+  //boolean canPlayWav2 = ("no" != sfx.canPlayType("audio/wav")) && ("" != sfx.canPlayType("audio/wav"));
+  //if (canPlayWav2) {
+	// var audioElement2 = sfx;
+	//  audioElement2.load();
+	//  audioElement2.loop = false;
+	//  audioElement2.volume = 1;
+	//  audioElement2.play();
+  //}
+
+	if (index == 1) {
+		sfx1.play();
+	} else if (index == 2) {
+		sfx2.play();
+	} else if (index == 3) {
+		sfx3.play();
+	} else if (index == 4) {
+		sfx4.play();
+	} else if (index == 5) {
+		sfx5.play();
+	} else if (index == 6) {
+		sfx6.play();
+	} else if (index == 7) {
+		sfx7.play();
+	}
+
+}
+
+
+void addBullet() {
+	if (bullets.size() >= 3)
+	  return;
+	for (int k=0;k<cannons.size();k++)
+	{
+	  Cannon c = cannons.get(k);
+	  c.fire();
+	}
+}
+
+ // A simple Particle class	 
+   
+class Particle {  
+  Vector3D loc;	 
+  Vector3D vel;	 
+  Vector3D acc;	 
+  float r;
+  float startTimer = 60.0;
+  float timer;	
+  
+  // One constructor  
+  Particle(Vector3D a, Vector3D v, Vector3D l, float r_) {	
+	acc = a.copy();	 
+	vel = v.copy();	 
+	loc = l.copy();	 
+	r = r_;	 
+	timer = startTimer	
+  }	 
+	
+  // Another constructor (the one we are using here)  
+  Particle(Vector3D l) {  
+	acc = new Vector3D(0,0,0);
+	vel = new Vector3D(random(-2,2),random(-2,2),0);  
+	loc = l.copy();	 
+	r = 5.0;
+	timer = startTimer;
+  }	 
+  
+  
+  void run() {	
+	update();  
+	render();  
+  }	 
+  
+  // Method to update location
+  void update() {  
+	vel.add(acc);  
+	loc.add(vel);  
+	timer -= 1.0;  
+  }	 
+  
+  // Method to display
+  void render() {  
+	//ellipseMode(CENTER);	
+	noStroke();
+	fill(#FF0000, (timer / startTimer) * 127) + 127;
+	rect(loc.x, loc.y, r, r);
+	ellipse(loc.x,loc.y,r,r);  
+  }	 
+	
+  // Is the particle still useful?	
+  boolean dead() {	
+	if (timer <= 0.0) {	 
+	  return true;	
+	} else {  
+	  return false;	 
+	}  
+  }	 
+ }	
+  
+  
+// A class to describe a group of Particles	 
+// An ArrayList is used to manage the list of Particles	  
+  
+class ParticleSystem {	
+  
+  ArrayList particles;	  // An arraylist for all the particles	 
+  Vector3D origin;		  // An origin point for where particles are birthed
+  float lastTime;
+  float currTime;
+  float overTime;
+  int num;
+  int numSpawned;
+  
+  ParticleSystem(int setNum, float setOverTime, Vector3D v) {
+	num = setNum;
+	numSpawned = 0;
+	overTime = setOverTime;
+	particles = new ArrayList();			  // Initialize the arraylist
+	origin = v.copy();						  // Store the origin point
+	currTime = 0;
+	lastTime = millis() / 1000.0;
+   }
+   
+   void run() {
+	if (numSpawned < num)
+	{
+		 currTime += (millis() / 1000.0) - lastTime;
+		 lastTime = millis() / 1000.0;
+		 if (overTime == 0)
+		 {
+		 overTime = currTime;
+		 }
+		 int numToSpawn = ((currTime / overTime) * num) - numSpawned;
+		 numSpawned += numToSpawn;
+		 for (int i = 0; i < numToSpawn; i++) {
+		  addParticle();	// Add "num" amount of particles to the arraylist
+		 }
+	}
+	 // Cycle through the ArrayList backwards b/c we are deleting  
+	 for (int i = particles.size()-1; i >= 0; i--) {  
+	   Particle p = (Particle) particles.get(i);  
+	   p.run();	 
+	   if (p.dead()) {	
+		 particles.remove(i);  
+	   }  
+	 }	
+   }  
+   
+   void addParticle() {	 
+	 particles.add(new Particle(origin));  
+   }  
+   
+   void addParticle(Particle p) {  
+	 particles.add(p);	
+   }  
+   
+   // A method to test if the particle system still has particles  
+   boolean dead() {	 
+	 if (particles.isEmpty()) {	 
+	   return true;	 
+	 } else {  
+	   return false;  
+	 }	
+   }  
+   
+ }	
+   
+   
+   
+ // Simple Vector3D Class	
+   
+ public class Vector3D {  
+   public float x;	
+   public float y;	
+   public float z;	
+   
+   Vector3D(float x_, float y_, float z_) {	 
+	 x = x_; y = y_; z = z_;  
+   }  
+   
+   Vector3D(float x_, float y_) {  
+	 x = x_; y = y_; z = 0f;  
+   }  
+	
+   Vector3D() {	 
+	 x = 0f; y = 0f; z = 0f;  
+   }  
+   
+   void setX(float x_) {  
+	 x = x_;  
+   }  
+   
+   void setY(float y_) {  
+	 y = y_;  
+   }  
+   
+   void setZ(float z_) {  
+	 z = z_;  
+   }  
+	 
+   void setXY(float x_, float y_) {	 
+	 x = x_;  
+	 y = y_;  
+   }  
+	 
+  void setXYZ(float x_, float y_, float z_) {  
+	 x = x_;  
+	 y = y_;  
+	 z = z_;  
+   }  
+   
+   void setXYZ(Vector3D v) {  
+	 x = v.x;  
+	 y = v.y;  
+	 z = v.z;  
+   }  
+   public float magnitude() {  
+	 return (float) Math.sqrt(x*x + y*y + z*z);	 
+   }  
+  
+  public Vector3D copy() {	
+	 return new Vector3D(x,y,z);  
+   }  
+   
+   public Vector3D copy(Vector3D v) {  
+	 return new Vector3D(v.x, v.y,v.z);	 
+   }  
+	 
+   public void add(Vector3D v) {  
+	 x += v.x;	
+	 y += v.y;	
+	 z += v.z;	
+   }  
+   
+   public void sub(Vector3D v) {  
+	 x -= v.x;	
+	 y -= v.y;	
+	 z -= v.z;	
+   }  
+   
+   public void mult(float n) {	
+	 x *= n;  
+	 y *= n;  
+	 z *= n;  
+   }  
+   
+   public void div(float n) {  
+	 x /= n;  
+	 y /= n;  
+	 z /= n;  
+   }  
+   
+   public void normalize() {  
+	 float m = magnitude();	 
+	 if (m > 0) {  
+		div(m);	 
+	 }	
+   }  
+   
+   public void limit(float max) {  
+	 if (magnitude() > max) {  
+	   normalize();	 
+	   mult(max);  
+	 }	
+   }  
+   
+   public float heading2D() {  
+	 float angle = (float) Math.atan2(-y, x);  
+	 return -1*angle;  
+   }  
+   
+   public Vector3D add(Vector3D v1, Vector3D v2) {	
+	 Vector3D v = new Vector3D(v1.x + v2.x,v1.y + v2.y, v1.z + v2.z);  
+	 return v;	
+   }  
+   
+   public Vector3D sub(Vector3D v1, Vector3D v2) {	
+	 Vector3D v = new Vector3D(v1.x - v2.x,v1.y - v2.y,v1.z - v2.z);  
+	 return v;	
+   }  
+   
+   public Vector3D div(Vector3D v1, float n) {	
+	 Vector3D v = new Vector3D(v1.x/n,v1.y/n,v1.z/n);  
+	 return v;	
+   }  
+  
+   public Vector3D mult(Vector3D v1, float n) {	 
+	 Vector3D v = new Vector3D(v1.x*n,v1.y*n,v1.z*n);  
+	 return v;	
+   }  
+   
+   public float distance (Vector3D v1, Vector3D v2) {  
+	 float dx = v1.x - v2.x;  
+	 float dy = v1.y - v2.y;  
+	 float dz = v1.z - v2.z;  
+	 return (float) Math.sqrt(dx*dx + dy*dy + dz*dz);  
+   }  
+  
+}
+
+</script>
+
+<div class="main">
+		<div class="main-content">
+			<div id="loading"><img src="img/loading.gif" width="530" height="530" /></div>
+			<canvas id="pcanvas"></canvas>
+			<div id="instructions">
+				<h1>KnifeTank the game</h1>
+				<dl>
+					<dt>how to play</dt>
+					<dd>
+						<ul>
+							<li>Don't get stabbed.</li>
+							<li>Turn all music blocks on</li>
+							<li>w a s d to move</li>
+							<li>use mouse to shoot</li>
+							<li>for Safari, and Chrome</li>
+							<li>remember to turn sound on</li>
+							<li>other browsers coming soon</li>
+						</ul>
+					</dd>
+				</dl>
+				<p>KnifeTank copyright Doctor Popular 2010</p>
+				<p>html5 game</p>
+			</div>
+		</div>
+</div>
+<div style="height:0px;width:0px;overflow:hidden;"><img id="img1"><img id="img2"><img id="img3"></div>
+<form><input type="hidden" name="level-select" id="level-select" /></form>
+</body>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-17326425-1']);
+	_gaq.push(['_trackPageview']);
+	
+	(function() 
+	{
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</html>

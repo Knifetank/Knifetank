@@ -1,0 +1,240 @@
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 3.0.0pr1
+*/
+/* YUI Font Lookup Table
+
+For pixels (px)  	Declare this percent (%)
+10				 	77
+11 					85
+12 					93
+13 					100
+14 					108
+15 					116
+16 					123.1
+17 					131
+18 					138.5
+19 					146.5
+20 					153.9
+21 					161.6
+22 					167
+23 					174
+24 					182
+25 					189
+26 					197
+
+*/
+
+html{color:#000;background:#000; height: 100%;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}
+body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea{font:99% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+body {
+	text-align:center;
+	margin-left:auto;margin-right:auto;
+	height: 100%;
+	font-family: helvetica, arial,helvetica,"FreeSans","Utkal","Nimbus Sans L","Malayalam","Phetsarath OT","Garuda",clean,sans-serif; /* extra arial-like fonts to ensure sans-serif on Linux browsers */
+	color:#000000; 
+	padding: 0; margin: 0;
+}
+li {
+	margin: 0;
+}
+strong {
+	font-weight: bold;
+}
+em {
+	font-style: italic;
+}
+input, textarea {outline-style:none;} /* turn off safari's highlight */
+
+/* 	
+	YUI EM calculation: 
+	Pixel width / 13px = "EM Width"
+	"EM Width" x 0.9759 = "IE's EM Width" 
+*/
+.main {
+	margin: auto;
+	width: 960px;
+/*	width:76.923em;
+	*width:75.069em;
+	margin: auto; 
+	background-color: transparent;
+	height: 100%;
+	border-left: 1px solid #333;
+	border-right: 1px solid #333;
+	background: #fff; */
+} 
+.clear {
+	clear: both;
+}
+#intro {
+	width: 960px;
+	height: 640px;
+	position: relative;
+	overflow: hidden;
+	background-color: #000;
+}
+#intro-scrn {
+	width: 960px;
+	height: 640px;
+	background: transparent url('../img/kt_worky.png') no-repeat;
+	opacity: 0.5;
+	position: absolute;
+	top: 0; left: 0;
+	display: none;
+}
+h1 {
+	font-weight: bold;
+	font-size: 138.5%;
+}
+.main-content {
+	padding: 2em;
+}
+
+#fire {
+	background: transparent url('../img/kt_fireback.png') no-repeat 0 0;
+	display: block;
+	height: 640px;
+	width: 960px;
+	position: absolute;
+	top: 0; left: -1px;
+
+}
+
+#tank {
+	background: transparent url('../img/kt_tank.png') no-repeat 0 0;
+	display: block;
+	height: 470px;
+	width: 552px;
+	position: absolute;
+	/* top: -5px; left: 250px; */
+	top: 339px;
+	left: -540px;
+}
+#skull2 {
+	background: transparent url('../img/kt_skullmound03.png') no-repeat 0 0;
+	display: block;
+	height: 640px;
+	width: 960px;
+	position: absolute;
+	top: 241px; left: 0;
+}
+#skull1 {
+	background: transparent url('../img/kt_skullmound01.png') no-repeat 0 0;
+	display: block;
+	height: 640px;
+	width: 960px;
+	position: absolute;
+	top: 159px; left: 0;
+}
+
+#title {
+	background: transparent url('../img/kt_title.png') no-repeat 0 0;
+	display: block;
+	height: 409px;
+	width: 295px;
+	position: absolute;
+	top: 433px; left: -408px;
+}
+#controls, #controls2 {
+	width: 140px;
+	position: absolute;
+	top: 200px;
+	left: 100px;
+	display: none;
+}
+#controls2 {
+	top: 180px;
+}
+#controls li, #controls2 li {
+	border: 2px solid white;
+	background: transparent;
+	margin-bottom: 2em;
+}
+#controls2 li {
+	margin-bottom: 1em;
+}
+#controls a, #controls2 a {
+	background: white;
+	margin: 5px;
+	padding: 15px 10px 10px 10px;
+	color: #000;
+	font-weight: bold;
+	font-size: 142%;
+	text-decoration: none;
+	display: block;
+	letter-spacing: 0.15em;
+}
+#controls a:hover, #controls2 a:hover {
+	text-decoration: none;
+	background-color: #F27D19;
+}
+
+
+#controls3
+{
+	width: 800px;
+	position: absolute;
+	top: 180px;
+	left: 100px;
+	display: none;
+}
+
+#controls3 li
+{
+	border: 2px solid white;
+	background: transparent;
+	margin-bottom: 2em;
+}
+
+#controls3 a
+{
+	background: white;
+	margin: 5px;
+	padding: 15px 10px 10px 10px;
+	color: #000;
+	font-weight: bold;
+	font-size: 142%;
+	text-decoration: none;
+	display: block;
+	letter-spacing: 0.15em;
+}
+
+#controls3 a:hover
+{
+	text-decoration: none;
+	background-color: #F27D19;
+}
+
+#peeps
+{
+	background: white;
+	color: #000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#peeps a
+{
+	background: white;
+	color: #000;
+	font-weight: bold;
+	text-decoration: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#peeps a:hover
+{
+	text-decoration: none;
+	background-color: #F27D19;
+}
+
+
+/* game stuff */
+.main-content canvas {background: #000 url("../art_assets/bg.png") no-repeat; width: 960px; height: 640px;}
+#instructions {background: transparent url("../img/knifetankinstructions.png") no-repeat; width: 954px; height: 230px; text-indent: -9999px;}
+#instructions dl, #instructions h1, #instructions p {display: none;}
+#loading  { position: absolute; width: 530px; height: 530px; margin-left: 206px; margin-top: 57px; }
+#pcanvas { display: block; }
